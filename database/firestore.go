@@ -14,8 +14,9 @@ import (
 type MyFirestoreClientFactory struct{}
 
 func (f *MyFirestoreClientFactory) NewClient(ctx context.Context) (*firestore.Client, error) {
-	sa := option.WithCredentialsFile("credentialsFile.json")
-	app, err := firebase.NewApp(ctx, nil, sa)
+	sa := option.WithCredentialsFile("clean-architecture-learning-a491e19461fd.json")
+	config := &firebase.Config{ProjectID: "clean-architecture-learning"}
+	app, err := firebase.NewApp(ctx, config, sa)
 	if err != nil {
 		return nil, err
 	}

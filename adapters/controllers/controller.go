@@ -4,10 +4,10 @@
 package controllers
 
 import (
+	"clean-architecture-learning/adapters/gateways"
+	"clean-architecture-learning/entities"
+	"clean-architecture-learning/usecases/ports"
 	"context"
-	"firestore_clean/adapters/gateways"
-	"firestore_clean/entities"
-	"firestore_clean/usecases/ports"
 
 	"github.com/labstack/echo/v4"
 )

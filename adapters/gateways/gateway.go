@@ -4,11 +4,11 @@
 package gateways
 
 import (
+	"clean-architecture-learning/entities"
+	"clean-architecture-learning/usecases/ports"
 	"context"
 	"encoding/json"
 	"errors"
-	"firestore_clean/entities"
-	"firestore_clean/usecases/ports"
 	"fmt"
 
 	"cloud.google.com/go/firestore"
@@ -50,25 +50,25 @@ func (gateway *UserGateway) AddUser(ctx context.Context, user *entities.User) ([
 		return nil, fmt.Errorf("failed AddUser Set: %v", err)
 	}
 
-	return getUsers(ctx, client)
+	return getUser(ctx, client)
 }
 
-func (gateway *UserGateway) GetUsers(ctx context.Context) ([]*entities.User, error) {
+func (gateway *UserGateway) GetUser(ctx context.Context) ([]*entities.User, error) {
 	client, err := gateway.clientFactory.NewClient(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed GetUsers NewClient: %v", err)
+		return nil, fmt.Errorf("failed GetUser NewClient: %v", err)
 	}
 	defer client.Close()
 
-	return getUsers(ctx, client)
+	return getUser(ctx, client)
 }
 
-func getUsers(ctx context.Context, client *firestore.Client) ([]*entities.User, error) {
+func getUser(ctx context.Context, client *firestore.Client) ([]*entities.User, error) {
 	allData := client.Collection("users").Documents(ctx)
 
 	docs, err := allData.GetAll()
 	if err != nil {
-		return nil, fmt.Errorf("failed GetUsers GetAll: %v", err)
+		return nil, fmt.Errorf("failed GetUser GetAll: %v", err)
 	}
 
 	users := make([]*entities.User, 0)
@@ -76,7 +76,7 @@ func getUsers(ctx context.Context, client *firestore.Client) ([]*entities.User, 
 		u := new(entities.User)
 		err = mapToStruct(doc.Data(), &u)
 		if err != nil {
-			return nil, fmt.Errorf("failed GetUsers mapToStruct: %v", err)
+			return nil, fmt.Errorf("failed GetUser mapToStruct: %v", err)
 		}
 		u.Name = doc.Ref.ID
 		users = append(users, u)

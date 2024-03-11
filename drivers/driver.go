@@ -4,8 +4,8 @@
 package drivers
 
 import (
+	"clean-architecture-learning/adapters/controllers"
 	"context"
-	"firestore_clean/adapters/controllers"
 
 	"github.com/labstack/echo/v4"
 )

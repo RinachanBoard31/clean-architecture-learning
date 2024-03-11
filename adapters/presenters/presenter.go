@@ -5,8 +5,8 @@
 package presenters
 
 import (
-	"firestore_clean/entities"
-	"firestore_clean/usecases/ports"
+	"clean-architecture-learning/entities"
+	"clean-architecture-learning/usecases/ports"
 	"log"
 	"net/http"
 
@@ -24,7 +24,7 @@ func NewUserOutputPort(ctx echo.Context) ports.UserOutputPort {
 }
 
 // 3. 全てのユーザを返す
-func (u *UserPresenter) OutputUsers(users []*entities.User) error {
+func (u *UserPresenter) OutputUser(users []*entities.User) error {
 	return u.ctx.JSON(http.StatusOK, users)
 }
 
